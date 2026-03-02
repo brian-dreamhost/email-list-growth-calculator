@@ -81,6 +81,14 @@ export default function App() {
   const [revenuePerSub, setRevenuePerSub] = useState(1)
   const [showScenarios, setShowScenarios] = useState(false)
 
+  const fillTestData = () => {
+    setListSize(4500)
+    setGrowthRate(6.5)
+    setChurnRate(1.8)
+    setMonths(12)
+    setRevenuePerSub(2.50)
+  }
+
   const result = useMemo(() =>
     projectGrowth(listSize, growthRate, churnRate, months, revenuePerSub),
     [listSize, growthRate, churnRate, months, revenuePerSub]
@@ -115,6 +123,16 @@ export default function App() {
           <div className="inline-flex items-center px-4 py-2 border border-turtle text-turtle rounded-full text-sm font-medium mb-6">Free Tool</div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Email List Growth Calculator</h1>
           <p className="text-cloudy text-lg max-w-2xl mx-auto">Project your email list growth over time. See milestones, scenario comparisons, and estimated revenue impact.</p>
+        </div>
+
+        <div className="flex justify-end mb-4">
+          <button
+            type="button"
+            onClick={fillTestData}
+            className="px-3 py-1.5 text-xs font-mono bg-prince/20 text-prince border border-prince/30 rounded hover:bg-prince/30 transition-colors focus:outline-none focus:ring-2 focus:ring-prince focus:ring-offset-2 focus:ring-offset-abyss"
+          >
+            Fill Test Data
+          </button>
         </div>
 
         {/* Inputs */}
