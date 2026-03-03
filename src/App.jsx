@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, memo } from 'react'
 
 function projectGrowth(listSize, monthlyGrowthRate, monthlyChurnRate, months, revenuePerSub) {
   const data = []
@@ -47,7 +47,7 @@ function projectGrowth(listSize, monthlyGrowthRate, monthlyChurnRate, months, re
   }
 }
 
-function BarChart({ data, maxMonths }) {
+const BarChart = memo(function BarChart({ data, maxMonths }) {
   if (data.length === 0) return null
   const maxVal = Math.max(...data.map(d => d.size))
   const displayData = data.filter((_, i) => {
@@ -71,7 +71,7 @@ function BarChart({ data, maxMonths }) {
       })}
     </div>
   )
-}
+})
 
 export default function App() {
   const [listSize, setListSize] = useState(1000)
@@ -178,7 +178,7 @@ export default function App() {
             { label: 'Total Gained', value: `+${result.totalGained.toLocaleString()}`, color: 'text-azure' },
             { label: 'Total Lost', value: `-${result.totalLost.toLocaleString()}`, color: 'text-coral' },
           ].map((stat, i) => (
-            <div key={i} className="card-gradient border border-metal/20 rounded-xl p-4 text-center">
+            <div key={i} className="card-gradient border border-metal/20 rounded-xl p-4 text-center hover-lift animate-slideUp" style={{ animationDelay: `${i * 0.08}s` }}>
               <p className="text-xs text-galactic mb-1">{stat.label}</p>
               <p className={`text-xl font-bold ${stat.color}`}>{stat.value}</p>
             </div>
@@ -207,7 +207,7 @@ export default function App() {
             <h3 className="font-semibold text-white mb-4">Milestones</h3>
             <div className="grid sm:grid-cols-2 gap-3">
               {result.milestones.map((m, i) => (
-                <div key={i} className="flex items-center justify-between bg-midnight/50 rounded-lg p-3">
+                <div key={i} className="flex items-center justify-between bg-midnight/50 rounded-lg p-3 animate-slideUp" style={{ animationDelay: `${i * 0.08}s` }}>
                   <span className="text-sm text-cloudy">{m.target.toLocaleString()} subscribers</span>
                   {m.months !== null ? (
                     <span className="text-sm font-medium text-azure">{m.months} months</span>
@@ -291,7 +291,7 @@ export default function App() {
               { title: 'Run a re-engagement campaign', text: 'Email inactive subscribers with a compelling offer. Remove non-responders to improve engagement metrics.' },
               { title: 'Optimize signup forms', text: 'A/B test form placement, copy, and number of fields. Pop-ups convert 3% on average.' },
             ].map((tip, i) => (
-              <div key={i} className="bg-midnight/50 rounded-lg p-3">
+              <div key={i} className="bg-midnight/50 rounded-lg p-3 hover-lift animate-slideUp" style={{ animationDelay: `${i * 0.08}s` }}>
                 <p className="font-medium text-azure mb-1">{tip.title}</p>
                 <p className="text-galactic text-xs">{tip.text}</p>
               </div>
@@ -301,7 +301,7 @@ export default function App() {
       </div>
 
       <footer className="border-t border-metal/30 mt-16">
-        <div className="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-galactic">
+        <div className="max-w-[1600px] mx-auto px-4 py-6 text-center text-sm text-galactic">
           Free marketing tools by <a href="https://www.dreamhost.com" target="_blank" rel="noopener" className="text-azure hover:text-white transition-colors">DreamHost</a>
         </div>
       </footer>
